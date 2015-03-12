@@ -16,7 +16,6 @@
 #include <vector>
 
 #define MAXLINE     1024
-#define IPADDRESS   "172.1.128.160"
 #define SERV_PORT   8787
 
 #define MAXTHREADS 1 
@@ -77,7 +76,8 @@ int tryConnectServer()
 		bzero(&servaddr,sizeof(servaddr));
 		servaddr.sin_family = AF_INET;
 		servaddr.sin_port = htons(SERV_PORT);
-		inet_pton(AF_INET,IPADDRESS,&servaddr.sin_addr);
+		//inet_pton(AF_INET,IPADDRESS,&servaddr.sin_addr);
+		servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 
 		int rtn = connect(sockfd,(struct sockaddr*)&servaddr,sizeof(servaddr));
 		if(rtn != 0)

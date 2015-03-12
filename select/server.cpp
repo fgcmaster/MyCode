@@ -17,14 +17,13 @@
 #include <sys/types.h>
 #include <arpa/inet.h>
 
-#define IPADDRESS   "172.1.128.160"
 #define PORT        8787
 #define MAXLINE     1024
 #define LISTENQ     400 
 
 //函数声明
 //创建套接字并进行绑定
-static int socket_bind(const char* ip,int port);
+static int socket_bind(int port);
 //IO多路复用select
 static void do_select(int listenfd);
 //处理多个连接
@@ -35,13 +34,13 @@ int main(int argc,char *argv[])
 	int  listenfd,connfd,sockfd;
 	struct sockaddr_in cliaddr;
 	socklen_t cliaddrlen;
-	listenfd = socket_bind(IPADDRESS,PORT);
+	listenfd = socket_bind(PORT);
 	listen(listenfd,LISTENQ);
 	do_select(listenfd);
 	return 0;
 }
 
-static int socket_bind(const char* ip,int port)
+static int socket_bind(int port)
 {
 	int  listenfd;
 	struct sockaddr_in servaddr;
@@ -53,9 +52,10 @@ static int socket_bind(const char* ip,int port)
 	}
 	bzero(&servaddr,sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
-	inet_pton(AF_INET,ip,&servaddr.sin_addr);
+	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+	//inet_pton(AF_INET,ip,&servaddr.sin_addr);
 	servaddr.sin_port = htons(port);
-	servaddr.sin_addr.s_addr = inet_addr(ip);
+	//servaddr.sin_addr.s_addr = inet_addr(ip);
 	if (bind(listenfd,(struct sockaddr*)&servaddr,sizeof(servaddr)) == -1)
 	{
 		perror("bind error: ");
