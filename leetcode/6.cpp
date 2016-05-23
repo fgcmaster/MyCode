@@ -20,46 +20,7 @@ class Solution
 			string resultStr;
 			int strLen = s.size();
 			resultStr.reserve(strLen);
-			int eachSegNum = numRows <= 2? numRows: numRows+1;
-			for(int i = 0; i < numRows;i++)
-			{
-				int columNum = 0;
-				while(true)
-				{
-					int columPos = columNum*eachSegNum+i;
-					if(columPos < strLen)
-					{
-						resultStr.push_back(s[columPos]);
-					}
-					else
-					{
-						break;
-					}
-					if(numRows > 2 && i == numRows-2)
-					{
-						int zigPos = (columNum+1)*eachSegNum-1;
-						if(zigPos < strLen)
-						{
-							resultStr.push_back(s[zigPos]);
-						}
-						else
-						{
-							break;
-						}
-					}
-					columNum++;
-				}
-			}
-			return resultStr;
-			/*  
-			if(numRows == 1)
-			{
-				return s;
-			}
-			string resultStr;
-			int strLen = s.size();
-			resultStr.reserve(strLen);
-			int eachSegNum = numRows*2-2;
+			int eachSegNum = (numRows <= 2? numRows: numRows*2-2);
 			for(int i = 0; i < numRows;i++)
 			{
 				int columNum = 0;
@@ -75,9 +36,9 @@ class Solution
 						break;
 					}
 
-					int zigNum = (columNum%2 == 0? numRows+i-1: eachSegNum-i);
+					int zigNum = (columNum%2 == 1? numRows+i-1: eachSegNum-i);
 					int zigPos = columNum*eachSegNum + zigNum;
-					if(i != 0 && i != numRows-1 )
+					if(numRows > 2 && i != 0 && i != numRows-1 )
 					{
 						if(zigPos < strLen)
 						{
@@ -92,7 +53,6 @@ class Solution
 				}
 			}
 			return resultStr;
-			*/
 
 		}
 };
@@ -130,6 +90,7 @@ int main()
 	checkResult("AB", 1,"AB");
 	checkResult("ABCD", 2,"ACBD");
 	checkResult("ABCDE", 4,"ABCED");
+	checkResult("ABCDEF", 4,"ABFCED");
 
 	return 0;
 }
