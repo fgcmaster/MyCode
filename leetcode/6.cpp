@@ -13,6 +13,11 @@ class Solution
 	public:
 		string convert(string s, int numRows)
 		{
+			if(numRows == 1)
+			{
+				return s;
+			}
+
 			string resultStr;
 			int strLen = s.size();
 			resultStr.reserve(strLen);
@@ -81,6 +86,7 @@ int main()
 	checkResult("PAYPALISHIRING", 3,"PAHNAPLSIIGYIR");
 	checkResult("PAYPALISHIRING", 4,"PINAASIGYLHRPI");
 	checkResult("PAY", 3,"PAY");
+	checkResult("A", 1,"A");
 
 	return 0;
 }
