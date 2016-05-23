@@ -13,10 +13,14 @@ class Solution
 	public:
 		string convert(string s, int numRows)
 		{
+			if(numRows == 1)
+			{
+				return s;
+			}
 			string resultStr;
 			int strLen = s.size();
 			resultStr.reserve(strLen);
-			int eachSegNum = numRows+1;
+			int eachSegNum = numRows <= 2? numRows: numRows+1;
 			for(int i = 0; i < numRows;i++)
 			{
 				int columNum = 0;
@@ -31,7 +35,7 @@ class Solution
 					{
 						break;
 					}
-					if(i == numRows-2)
+					if(numRows > 2 && i == numRows-2)
 					{
 						int zigPos = (columNum+1)*eachSegNum-1;
 						if(zigPos < strLen)
@@ -123,6 +127,8 @@ int main()
 	//checkResult("PAYPALISHIRING", 4,"PINAASIGYLHRPI");
 	checkResult("PAY", 3,"PAY");
 	checkResult("A", 1,"A");
+	checkResult("AB", 1,"AB");
+	checkResult("ABCD", 2,"ACBD");
 	checkResult("ABCDE", 4,"ABCED");
 
 	return 0;
