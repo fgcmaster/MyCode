@@ -36,7 +36,7 @@ class Solution
 						break;
 					}
 
-					int zigNum = (columNum%2 == 1? numRows+i-1: eachSegNum-i);
+					int zigNum = eachSegNum-i;
 					int zigPos = columNum*eachSegNum + zigNum;
 					if(numRows > 2 && i != 0 && i != numRows-1 )
 					{
@@ -84,13 +84,13 @@ void checkResult(const string& leftNums, int numRows, const string& target)
 int main()
 {
 	checkResult("PAYPALISHIRING", 3,"PAHNAPLSIIGYIR");
-	//checkResult("PAYPALISHIRING", 4,"PINAASIGYLHRPI");
 	checkResult("PAY", 3,"PAY");
 	checkResult("A", 1,"A");
 	checkResult("AB", 1,"AB");
 	checkResult("ABCD", 2,"ACBD");
 	checkResult("ABCDE", 4,"ABCED");
 	checkResult("ABCDEF", 4,"ABFCED");
+	checkResult("PAYPALISHIRING",4, "PINALSIGYAHRPI");
 
 	return 0;
 }
