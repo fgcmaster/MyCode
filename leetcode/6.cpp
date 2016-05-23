@@ -13,10 +13,6 @@ class Solution
 	public:
 		string convert(string s, int numRows)
 		{
-			if(numRows == 1)
-			{
-				return s;
-			}
 			string resultStr;
 			int strLen = s.size();
 			resultStr.reserve(strLen);
@@ -52,6 +48,10 @@ class Solution
 			}
 			return resultStr;
 			/*  
+			if(numRows == 1)
+			{
+				return s;
+			}
 			string resultStr;
 			int strLen = s.size();
 			resultStr.reserve(strLen);
