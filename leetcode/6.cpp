@@ -17,7 +17,41 @@ class Solution
 			{
 				return s;
 			}
-
+			string resultStr;
+			int strLen = s.size();
+			resultStr.reserve(strLen);
+			int eachSegNum = numRows+1;
+			for(int i = 0; i < numRows;i++)
+			{
+				int columNum = 0;
+				while(true)
+				{
+					int columPos = columNum*eachSegNum+i;
+					if(columPos < strLen)
+					{
+						resultStr.push_back(s[columPos]);
+					}
+					else
+					{
+						break;
+					}
+					if(i == numRows-2)
+					{
+						int zigPos = (columNum+1)*eachSegNum-1;
+						if(zigPos < strLen)
+						{
+							resultStr.push_back(s[zigPos]);
+						}
+						else
+						{
+							break;
+						}
+					}
+					columNum++;
+				}
+			}
+			return resultStr;
+			/*  
 			string resultStr;
 			int strLen = s.size();
 			resultStr.reserve(strLen);
@@ -54,6 +88,8 @@ class Solution
 				}
 			}
 			return resultStr;
+			*/
+
 		}
 };
 
@@ -84,9 +120,10 @@ void checkResult(const string& leftNums, int numRows, const string& target)
 int main()
 {
 	checkResult("PAYPALISHIRING", 3,"PAHNAPLSIIGYIR");
-	checkResult("PAYPALISHIRING", 4,"PINAASIGYLHRPI");
+	//checkResult("PAYPALISHIRING", 4,"PINAASIGYLHRPI");
 	checkResult("PAY", 3,"PAY");
 	checkResult("A", 1,"A");
+	checkResult("ABCDE", 4,"ABCED");
 
 	return 0;
 }
