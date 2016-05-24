@@ -17,17 +17,13 @@ class Solution
 			bool isNeg = (num < 0);
 			int number = abs(num);
 			int resultNum = 0;
-			while(true)
+			while(number > 0)
 			{
 				if(resultNum > INT_MAX/10 || resultNum*10 > INT_MAX - number%10)
 				{
 					return 0;
 				}
 				resultNum = resultNum*10 + number%10;
-				if(number < 10)
-				{
-					break;
-				}
 				number = number/10;
 			}
 			return isNeg ? -1*resultNum: resultNum;
@@ -61,16 +57,14 @@ void checkResult(int leftNums, int target)
 
 int main()
 {
-	/* 	checkResult(123, 321);
+	printf("%d, %d, %u\n", INT_MAX, INT_MIN, UINT_MAX);
+	checkResult(123, 321);
 	checkResult(-123, -321);
 	checkResult(-120, -21);
 	checkResult(-1, -1);
 	checkResult(2, 2);
 	checkResult(20, 2);
 	checkResult(0, 0);
- */
-
-	printf("%d, %d, %u\n", INT_MAX, INT_MIN, UINT_MAX);
 	checkResult(1534236469, 0);
 
 	return 0;
