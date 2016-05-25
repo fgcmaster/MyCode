@@ -17,7 +17,7 @@ class Solution
 	public:
 		int longestConsecutive(vector<int>& nums) 
 		{
-			IntMap usedMap;
+			IntMap usedMap(nums.size());
 			for(auto num: nums)
 			{
 				usedMap[num] = false;
@@ -27,6 +27,7 @@ class Solution
 			{
 				if(!usedMap[num])
 				{
+					usedMap[num] = true;
 					int currConsecutiveLen = 1;
 					for(int i = num+1; ; ++i)
 					{
@@ -36,6 +37,7 @@ class Solution
 						}
 						else
 						{
+							usedMap[i] = true;
 							currConsecutiveLen++;
 						}
 					}
