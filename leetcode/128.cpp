@@ -41,6 +41,18 @@ class Solution
 							currConsecutiveLen++;
 						}
 					}
+					for(int i = num-1;; --i)
+					{
+						if(usedMap.find(i) == usedMap.end())
+						{
+							break;
+						}
+						else
+						{
+							usedMap[i] = true;
+							currConsecutiveLen++;
+						}
+					}
 					consecutiveLen = max(consecutiveLen, currConsecutiveLen);
 				}
 			}
@@ -149,6 +161,12 @@ int main()
 {
 	checkResult({100,4,200,1,3,2}, 4);
 	checkResult({5,6,100,4,200,1,3,2,7,8}, 8);
+	IntVec bigVec;
+	for(int i = 9999; i > -999; i--)
+	{
+		bigVec.push_back(i);
+	}
+	checkResult(bigVec, 9999+999);
 
 	return 0;
 }
