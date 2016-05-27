@@ -3,38 +3,80 @@
 #include <vector>
 #include <iostream>
 #include <unordered_map>
+#include <unordered_set>
+#include <algorithm>
 
 using namespace std;
 
 typedef vector<int> IntVec;
 typedef vector<IntVec> VecVec;
 typedef unordered_map<int, int> IntMap;
+typedef unordered_set<int> IntSet;
 
 class Solution
 {
 	public:
-		vector<vector<int>> threeSum(const vector<int>& nums)
+		vector<vector<int>> threeSum(vector<int>& nums)
 		{
+			sort(nums.begin(), nums.end());
 			IntMap numMap;
+			int greaterEqualZeroPos = -1;
 			for(int i = 0; i < nums.size(); ++i)
 			{
+				if(nums[i] >= 0 && greaterEqualZeroPos == -1)
+				{
+					greaterEqualZeroPos = i;
+				}
 				numMap[nums[i]] = i;
 			}
 			VecVec result;
-			IntVec eachLine;
 			for(int i = 0; i < nums.size(); ++i)
 			{
-				int oppositeNum = -1*nums[i];
-				eachLine.clear();
-				for(int j = 0; j < nums.size(); ++j)
+				if(i != 0 && nums[i] == nums[i-1])
+				{
+					continue;
+				}
+				int startPos, endPos;
+				int curNum = nums[i];
+				if(curNum >= 0)
+				{
+					startPos = 0;
+					endPos = greaterEqualZeroPos-1;
+				}
+				else
+				{
+					startPos = greaterEqualZeroPos;
+					endPos = nums.size()-1;
+				}
+				int oppositeNum = -1*curNum;
+				IntSet numSet;
+				for(int j = startPos; j < endPos; ++j)
 				{
 					int leftNum = oppositeNum - nums[j];
-					if(numMap.find(leftNum) != numMap.end() && numMap[leftNum] > j && j != i && numMap[leftNum] != i)
+					if( (nums[j] >= 0 && leftNum < 0)
+							||(nums[j] < 0 && leftNum >= 0))
 					{
-						int minNum = min(min(nums[i], nums[j]), leftNum);
-						int maxNum = max(max(nums[i], nums[j]), leftNum);
-						int medNum = nums[i] + leftNum + nums[j] - minNum - maxNum;
-						eachLine.clear();
+						continue;
+					}
+					if(numMap.find(leftNum) != numMap.end() && numMap[leftNum] > j 
+							&& numSet.count(leftNum) == 0)
+					{
+						numSet.insert(leftNum);
+						int minNum = nums[i];
+						int maxNum = nums[j];
+						int medNum = leftNum;
+						if(minNum > medNum)
+						{
+							swap(minNum, medNum);
+						}
+						if(minNum > maxNum)
+						{
+							swap(minNum, maxNum);
+						}
+						if(medNum > maxNum)
+						{
+							swap(medNum, maxNum);
+						}
 						result.push_back({minNum, medNum, maxNum});
 					}
 				}
@@ -56,7 +98,7 @@ void printArray(const IntVec& nums)
 void checkResult(const IntVec& leftNums)
 {
 	Solution sol;
-	VecVec result = sol.threeSum(leftNums);
+	VecVec result = sol.threeSum(const_cast<IntVec&>(leftNums));
 	printArray(leftNums);
 	for(auto vec: result)
 	{
@@ -67,7 +109,14 @@ void checkResult(const IntVec& leftNums)
 
 int main()
 {
-	checkResult({-1,0,1,2,-1,-4});
+	/*  	checkResult({-1,0,1,2,-1,-4});
+	checkResult({-1,0,1,2, 2,-1,-4});
+	checkResult({-1,0,2});
+	checkResult({-2,-1,2, 3});
+	checkResult({-2,-1,-1,-1,2, 3});
+	checkResult({0,-2,-1,2, 0,3,-1,-1,3,-1});
+*/
+	checkResult({0,0,0});
 
 	return 0;
 }
