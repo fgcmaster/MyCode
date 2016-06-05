@@ -117,7 +117,5 @@ int main()
 	checkResult({0,-2,-1,2, 0,3,-1,-1,3,-1});
 */
 	checkResult({0,0,0});
-
-	return 0;
 }
 
