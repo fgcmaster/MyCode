@@ -21,7 +21,7 @@ class Solution
 			sort(nums.begin(), nums.end());
 			IntMap numMap;
 			int greaterEqualZeroPos = -1;
-			for(int i = 0; i < nums.size(); ++i)
+			for(size_t i = 0; i < nums.size(); ++i)
 			{
 				if(nums[i] >= 0 && greaterEqualZeroPos == -1)
 				{
@@ -30,7 +30,7 @@ class Solution
 				numMap[nums[i]] = i;
 			}
 			VecVec result;
-			for(int i = 0; i < nums.size(); ++i)
+			for(size_t i = 0; i < nums.size(); ++i)
 			{
 				if(i != 0 && nums[i] == nums[i-1])
 				{
@@ -38,7 +38,7 @@ class Solution
 				}
 				int startPos, endPos;
 				int curNum = nums[i];
-				if(curNum >= 0)
+				if(curNum > 0)
 				{
 					startPos = 0;
 					endPos = greaterEqualZeroPos-1;

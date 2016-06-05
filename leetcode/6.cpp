@@ -13,10 +13,6 @@ class Solution
 	public:
 		string convert(string s, int numRows)
 		{
-			if(numRows == 1)
-			{
-				return s;
-			}
 			string resultStr;
 			int strLen = s.size();
 			resultStr.reserve(strLen);
@@ -36,24 +32,18 @@ class Solution
 						break;
 					}
 
-					int zigNum = eachSegNum-i;
-					int zigPos = columNum*eachSegNum + zigNum;
-					if(numRows > 2 && i != 0 && i != numRows-1 )
+					if(i != 0 && i != numRows-1 )
 					{
+						int zigPos = (columNum+1)*eachSegNum - i;
 						if(zigPos < strLen)
 						{
 							resultStr.push_back(s[zigPos]);
-						}
-						else
-						{
-							break;
 						}
 					}
 					columNum++;
 				}
 			}
 			return resultStr;
-
 		}
 };
 
